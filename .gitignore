@@ -1,0 +1,7 @@
+CricBaseDB
+ipl_json/
+csv_files/
+CricBase/
+.streamlit/
+CricStats/
+.venv/
