@@ -5,3 +5,4 @@ CricBase/
 .streamlit/
 CricStats/
 .venv/
+.DS_Store/
