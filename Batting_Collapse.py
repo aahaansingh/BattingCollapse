@@ -23,10 +23,8 @@ if view == "Spreadsheet" :
         "Select a statistic to display", 
         ("true_avg", "true_sr", "true_bowling_sr", "true_econ"))
 
-    rows = run_query(supabase, stat, start_date, end_date)
-
-    df_rows = pd.DataFrame.from_dict(rows.data)
-    st.dataframe(df_rows)
+    df = run_query(supabase, stat, start_date, end_date)
+    st.dataframe(df)
 else :
     role = st.selectbox(
         "Type of statistics to display", 
@@ -36,10 +34,8 @@ else :
              "The minimum number of runs required to be displayed on the plot",
              100, 3000, 1000
         )
-        true_avg_rows = run_query(supabase, "true_avg", start_date, end_date)
-        true_sr_rows = run_query(supabase, "true_sr", start_date, end_date)
-        true_avg_df = pd.DataFrame.from_dict(true_avg_rows.data)
-        true_sr_df = pd.DataFrame.from_dict(true_sr_rows.data)
+        true_avg_df = run_query(supabase, "true_avg", start_date, end_date)
+        true_sr_df = run_query(supabase, "true_sr", start_date, end_date)
 
         true_avg_df = true_avg_df.loc[np.where(true_avg_df["runs_scored"] >= runs_cutoff)]
         avg_sr_merged = true_avg_df.merge(true_sr_df)
@@ -56,10 +52,8 @@ else :
              "The minimum number of balls delivered required to be displayed on the plot",
              100, 2400, 1000
         )
-        true_econ_rows = run_query(supabase, "true_econ", start_date, end_date)
-        true_bowling_sr_rows = run_query(supabase, "true_bowling_sr", start_date, end_date)
-        true_econ_df = pd.DataFrame.from_dict(true_econ_rows.data)
-        true_bowling_sr_df = pd.DataFrame.from_dict(true_bowling_sr_rows.data)
+        true_econ_df = run_query(supabase, "true_econ", start_date, end_date)
+        true_bowling_sr_df = run_query(supabase, "true_bowling_sr", start_date, end_date)
 
         true_econ_df = true_econ_df.loc[np.where(true_econ_df["balls_delivered"] >= balls_cutoff)]
         econ_sr_merged = true_econ_df.merge(true_bowling_sr_df)

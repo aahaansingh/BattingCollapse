@@ -10,4 +10,5 @@ def init_connection():
 
 @st.cache_data(ttl=600)
 def run_query(_connection: Client, function: str, start_date: str, end_date: str):
-    return _connection.rpc(function, {"start_date":start_date, "end_date":end_date}).execute()
+    return pd.DataFrame.from_dict(
+        (_connection.rpc(function, {"start_date":start_date, "end_date":end_date}).execute()).data)
