@@ -1,6 +1,4 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
 import plotly.express as px
 from utility.utilities import init_connection, run_query
 
@@ -29,15 +27,14 @@ else :
     role = st.selectbox(
         "Type of statistics to display", 
         ("Batting", "Bowling"))
+    num_cutoff = st.slider(
+             "The number of players to display",
+             5, 100, 15)
     if role == "Batting" :
-        runs_cutoff = st.slider(
-             "The minimum number of runs required to be displayed on the plot",
-             100, 3000, 1000
-        )
         true_avg_df = run_query(supabase, "true_avg", start_date, end_date)
         true_sr_df = run_query(supabase, "true_sr", start_date, end_date)
 
-        true_avg_df = true_avg_df.loc[np.where(true_avg_df["runs_scored"] >= runs_cutoff)]
+        true_avg_df = true_avg_df.sort_values(by=["runs_scored"], ascending=False).head(num_cutoff)
         avg_sr_merged = true_avg_df.merge(true_sr_df)
 
         chart = px.scatter(
@@ -48,19 +45,15 @@ else :
             color="avg_position")
         st.plotly_chart(chart)
     else :
-        balls_cutoff = st.slider(
-             "The minimum number of balls delivered required to be displayed on the plot",
-             100, 2400, 1000
-        )
         true_econ_df = run_query(supabase, "true_econ", start_date, end_date)
         true_bowling_sr_df = run_query(supabase, "true_bowling_sr", start_date, end_date)
 
-        true_econ_df = true_econ_df.loc[np.where(true_econ_df["balls_delivered"] >= balls_cutoff)]
+        true_econ_df = true_econ_df.sort_values(by=["balls_delivered"], ascending=False).head(num_cutoff)
         econ_sr_merged = true_econ_df.merge(true_bowling_sr_df)
 
         chart = px.scatter(
             econ_sr_merged,
-            x="true_econ", 
+            x="true_econ",
             y="true_sr",
             hover_data=["player_name"])
         st.plotly_chart(chart)
