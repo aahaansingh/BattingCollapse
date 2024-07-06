@@ -24,12 +24,14 @@ if view == "Spreadsheet" :
     df = run_query(supabase, stat, start_date, end_date)
     st.dataframe(df)
 else :
+    st.write('Hover over a data point to see additional information.')
     role = st.selectbox(
         "Type of statistics to display", 
         ("Batting", "Bowling"))
     num_cutoff = st.slider(
              "The number of players to display",
              5, 100, 15)
+    label = st.checkbox("Show names")
     if role == "Batting" :
         true_avg_df = run_query(supabase, "true_avg", start_date, end_date)
         true_sr_df = run_query(supabase, "true_sr", start_date, end_date)
@@ -37,12 +39,20 @@ else :
         true_avg_df = true_avg_df.sort_values(by=["runs_scored"], ascending=False).head(num_cutoff)
         avg_sr_merged = true_avg_df.merge(true_sr_df)
 
-        chart = px.scatter(
-            avg_sr_merged,
-            x="true_avg", 
-            y="true_sr",
-            hover_data=["player_name"],
-            color="avg_position")
+        if not label :
+            chart = px.scatter(
+                avg_sr_merged,
+                x="true_avg", 
+                y="true_sr",
+                hover_data=["player_name"],
+                color="avg_position")
+        else :
+            chart = px.scatter(
+                avg_sr_merged,
+                x="true_avg", 
+                y="true_sr",
+                text="player_name",
+                color="avg_position")
         st.plotly_chart(chart)
     else :
         true_econ_df = run_query(supabase, "true_econ", start_date, end_date)
@@ -51,9 +61,16 @@ else :
         true_econ_df = true_econ_df.sort_values(by=["balls_delivered"], ascending=False).head(num_cutoff)
         econ_sr_merged = true_econ_df.merge(true_bowling_sr_df)
 
-        chart = px.scatter(
-            econ_sr_merged,
-            x="true_econ",
-            y="true_sr",
-            hover_data=["player_name"])
+        if not label :
+            chart = px.scatter(
+                econ_sr_merged,
+                x="true_econ",
+                y="true_sr",
+                hover_data=["player_name"])
+        else :
+            chart = px.scatter(
+                econ_sr_merged,
+                x="true_econ",
+                y="true_sr",
+                text="player_name")
         st.plotly_chart(chart)

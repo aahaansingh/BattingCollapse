@@ -44,6 +44,7 @@ else :
     num_cutoff = st.slider(
              "The number of players to display",
              5, 100, 15)
+    label = st.checkbox("Show names")
     if role == "Batting" :
         true_avg_fn = ""
         true_sr_fn = ""
@@ -64,12 +65,20 @@ else :
         true_avg_df = true_avg_df.sort_values(by=["runs_scored"], ascending=False).head(num_cutoff)
         avg_sr_merged = true_avg_df.merge(true_sr_df)
 
-        chart = px.scatter(
-            avg_sr_merged,
-            x=avg_metric,
-            y="true_sr",
-            hover_data=["name"],
-            color="avg_position")
+        if not label :
+            chart = px.scatter(
+                avg_sr_merged,
+                x=avg_metric,
+                y="true_sr",
+                hover_data=["name"],
+                color="avg_position")
+        else :
+            chart = px.scatter(
+                avg_sr_merged,
+                x=avg_metric,
+                y="true_sr",
+                text="name",
+                color="avg_position")
         st.plotly_chart(chart)
     else :
         true_econ_fn = "true_econ"
@@ -90,9 +99,16 @@ else :
         true_econ_df = true_econ_df.sort_values(by=["balls_delivered"], ascending=False).head(num_cutoff)
         econ_sr_merged = true_econ_df.merge(true_bowling_sr_df)
 
-        chart = px.scatter(
-            econ_sr_merged,
-            x="true_econ",
-            y="true_sr",
-            hover_data=["name"])
+        if not label :
+            chart = px.scatter(
+                econ_sr_merged,
+                x="true_econ",
+                y="true_sr",
+                hover_data=["name"])
+        else :
+            chart = px.scatter(
+                econ_sr_merged,
+                x="true_econ",
+                y="true_sr",
+                text="name")
         st.plotly_chart(chart)
