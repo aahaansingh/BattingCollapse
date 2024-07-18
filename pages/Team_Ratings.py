@@ -3,11 +3,10 @@ import plotly.express as px
 from utility.utilities import init_connection
 from utility.pagerank import weighted_team_rank_hist
 import warnings
-import pandas as pd
 
 supabase = init_connection()
 st.write('## Team Ratings')
-st.write('For more information on the somewhat arbitrary methodology behind these ratings, hang tight because there\'s an explanation coming!')
+st.write('For more information on the somewhat arbitrary methodology behind these ratings, check out [this](https://medium.com/@aahaansingh/pagerank-for-the-ipl-0d60d0621b81) post!')
 season = st.selectbox(
     "Which season do you want to see ratings for?", 
     ("2024", "2023", "2022", "2021", "2020/21", "2019", "2018", "2017", "2016", "2015",

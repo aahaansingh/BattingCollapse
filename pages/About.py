@@ -12,6 +12,8 @@ st.write("Phase stats are the above metrics calculated over three phases: powerp
 st.write("Furthermore, instead of using true average at the death, I have opted to use true runs per innings because death average is both an extremely noisy and extremely useless metric. Runs per innings at the death does end up significantly biasing finishers, so it's not a good metric if you want to understand the performance of players who take the game deep.")
 st.write("## What Makes These Stats Useful?")
 st.write("The nice thing about these stats is that they allow you to build a clearer overall picture of the player's abilities by adjusting for both conditions and era. There's definitely more advanced metrics out there, but these ones are useful enough without being opaque. That being said, I plan to add some more advanced metrics soon.")
+st.write("## Where Can I Learn More?")
+st.write("I now have a [blog](https://medium.com/@aahaansingh) where I have attempted to explain each of the features mentioned on this site.")
 st.write("## Credit")
 st.write("The data used for these stats is available on [CricSheet](https://cricsheet.org/matches/) and was relationalized with [CricBase](https://github.com/aahaansingh/CricBase).")
 st.write("I took the idea for these adjusted statistics from Jarrod Kimber's [Good Areas](https://www.goodareas.co/), although I'm not sure if they're implemented in the exact same way.")
