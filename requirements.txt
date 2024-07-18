@@ -3,3 +3,4 @@ numpy==1.26.4
 streamlit==1.36.0
 plotly==5.9.0
 supabase==2.5.1
+networkx==3.1
