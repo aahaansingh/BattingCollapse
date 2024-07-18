@@ -6,3 +6,5 @@ CricBase/
 CricStats/
 .venv/
 .DS_Store/
+.DS_Store
+main.py
