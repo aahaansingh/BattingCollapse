@@ -1,10 +1,8 @@
-from supabase import create_client, Client
+from supabase import Client
 import pandas as pd
 import numpy as np
 import streamlit as st
 import networkx as nx
-import matplotlib.pyplot as plt
-import plotly.express as px
 
 @st.cache_data(ttl=600)
 def yearly_results(_connection: Client, season: str):
